@@ -23,7 +23,7 @@ jobs:
         node-version : [14.x,16.x,18.x]
     defaults:
       run:
-        working-directory: ./vitehosting
+        working-directory: vitehosting
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -38,9 +38,7 @@ jobs:
           cache: 'npm'
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      - name: Install npm packages
-        working-directory: ./vitehosting
-        
+      - name: Install npm packages        
         run: npm install
       - name: Build App
         
