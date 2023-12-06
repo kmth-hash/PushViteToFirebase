@@ -43,6 +43,8 @@ jobs:
       - name: Build App
         
         run: npm run build
+      - name: list of files
+        run: ls
       - name: Upload prod files
         uses: actions/upload-artifact@v3
         with:
