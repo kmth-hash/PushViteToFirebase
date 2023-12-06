@@ -43,7 +43,11 @@ jobs:
       - name: Build App
         
         run: npm run build
-      
+      - name: Upload prod files
+        uses: actions/upload-artifact@v3
+        with:
+          name: production-files
+          path: ./dist
   
   deploy:
     name: Deploy Process
