@@ -39,7 +39,8 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install npm packages
-        
+        working-directory: ./vitehosting
+        run: ls
         run: npm install
       - name: Build App
         
