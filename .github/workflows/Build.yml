@@ -51,11 +51,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: production-files
-          path: ./dist
+          path: ./vitehosting/dist
       - name: check current dir
         run: pwd
       - name: list of files
-        run: ls
+        run: ls -lrtha
 
   deploy:
     name: Deploy
