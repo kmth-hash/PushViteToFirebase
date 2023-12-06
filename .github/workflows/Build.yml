@@ -27,6 +27,10 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+      - name: check current dir
+        run: pwd
+      - name: list of files
+        run: ls
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
