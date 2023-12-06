@@ -16,17 +16,13 @@ concurrency:
 
 jobs:
   build:
-    environment:
-      name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
+    name: Build
     name : Build
     runs-on: ubuntu-latest
-    strategy:
+
+        strategy:
       matrix:
-        node-version : [16.x,18.x]
-    defaults:
-      run:
-        working-directory: vitehosting
+        node-version : [16.x]
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -38,7 +34,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install npm packages        
@@ -52,20 +48,27 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: production-files
-          path: ./vitehosting/dist
+          path: ./dist
       - name: check current dir
         run: pwd
       - name: list of files
         run: ls
-               
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:          
-          path: './dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
 
-      
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: production-files
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
