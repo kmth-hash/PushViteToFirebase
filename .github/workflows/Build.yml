@@ -4,7 +4,7 @@ on:
   
   push:
     branches: ["main"]
-
+  workflow_dispatch:
   
 permissions:
   contents: read
@@ -19,9 +19,18 @@ jobs:
   build:
     name : Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version : [14.x,16.x,18.x]
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{matrix.node-version}}
+          cache: 'npm'
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install npm packages
