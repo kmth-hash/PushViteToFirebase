@@ -37,7 +37,7 @@ jobs:
       - name: Build App
         run: npm run build
       - name: Upload PROD build
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v2
         with: 
           name: prod-dir
           path: ./dist
