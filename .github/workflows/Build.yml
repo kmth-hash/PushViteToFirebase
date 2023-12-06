@@ -54,22 +54,33 @@ jobs:
   deploy:
     name: Deploy Process
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     if: github.ref =='refs/heads/main'
-
+    strategy:
+      matrix:
+        node-version : [16.x,18.x]
     steps:
+      - name: check current dir
+        run: pwd
       - name: list of files
         run: ls
-      - name: Download build
-        uses: actions/download-artifact@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      
+      - name: Set up Node
+        uses: actions/setup-node@v3
         with:
-          name: production-files
-          path: ./vitehosting/dist
-
+          node-version: ${{matrix.node-version}}
+          
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:          
+          path: './dist'
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./vitehosting/dist
-      - run: ls vitehosting/*
-      - run: pwd
+        id: deployment
+        uses: actions/deploy-pages@v2
