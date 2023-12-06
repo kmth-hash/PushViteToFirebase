@@ -58,10 +58,12 @@ jobs:
     if: github.ref =='refs/heads/main'
 
     steps:
+      - name: list of files
+        run: ls
       - name: Download build
         uses: actions/download-artifact@v3
         with:
-          name: prod-dir
+          name: production-files
           path: ./vitehosting/dist
 
       - name: Deploy to GitHub Pages
