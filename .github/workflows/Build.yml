@@ -33,8 +33,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Install npm packages
+        working-directory: ./vitehosting
         run: npm install
       - name: Build App
+        working-directory: ./vitehosting
         run: npm run build
       - name: Upload PROD build
         uses: actions/upload-pages-artifact@v2
