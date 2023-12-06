@@ -62,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: prod-dir
-          path: ./dist
+          path: ./vitehosting/dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
