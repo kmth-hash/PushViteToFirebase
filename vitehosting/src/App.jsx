@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-target-blank */
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import viteLogo from './assets/viteLogo.png';
 import './App.css'
 
 function App() {
